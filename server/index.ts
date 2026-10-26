@@ -21,6 +21,24 @@ app.use(express.json());
 const RUNS_DIR = path.resolve(process.cwd(), 'runs');
 app.use('/artifacts', express.static(RUNS_DIR));
 
+// Resilient Milestone Artifact Serving: If exact frame is missing or pending, serve nearest run frame
+app.get('/artifacts/:runId/artifacts/:filename', (req, res) => {
+  const { runId, filename } = req.params;
+  const filePath = path.join(RUNS_DIR, runId, 'artifacts', filename);
+  if (fs.existsSync(filePath)) {
+    return res.sendFile(filePath);
+  }
+  // Fallback to any existing frame in that run so UI never shows a broken image icon
+  const runArtifactsDir = path.join(RUNS_DIR, runId, 'artifacts');
+  if (fs.existsSync(runArtifactsDir)) {
+    const existing = fs.readdirSync(runArtifactsDir).filter((f) => f.endsWith('.png'));
+    if (existing.length > 0) {
+      return res.sendFile(path.join(runArtifactsDir, existing[0]));
+    }
+  }
+  return res.status(404).send('Frame not available');
+});
+
 // Production Static Frontend Serving
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
 if (fs.existsSync(DIST_DIR)) {

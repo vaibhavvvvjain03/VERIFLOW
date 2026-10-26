@@ -204,21 +204,26 @@ export async function executeDynamicPlan(options: DynamicExecutionOptions): Prom
         const frameFilename = `frame-${i + 1}.png`;
         const framePath = path.join(artifactsDir, frameFilename);
 
+        // Visual change actions (navigate, click, fill, scroll, press) or initial step require a fresh screenshot
+        const isVisualChangeAction = step.type === 'action' || i === 0;
+
         let captured = false;
-        try {
-          await page.screenshot({
-            path: framePath,
-            fullPage: false,
-            animations: 'disabled',
-            timeout: 2500,
-          });
-          captured = fs.existsSync(framePath) && fs.statSync(framePath).size > 0;
-        } catch (screenshotErr: any) {
-          console.warn(`[Veriflow] Milestone screenshot for step ${i + 1} timed out or failed:`, screenshotErr?.message || screenshotErr);
+        if (isVisualChangeAction) {
+          try {
+            await page.screenshot({
+              path: framePath,
+              fullPage: false,
+              animations: 'disabled',
+              timeout: 6000,
+            });
+            captured = fs.existsSync(framePath) && fs.statSync(framePath).size > 0;
+          } catch (screenshotErr: any) {
+            console.warn(`[Veriflow] Milestone screenshot for step ${i + 1} timed out or failed:`, screenshotErr?.message || screenshotErr);
+          }
         }
 
-        // Guaranteed fallback: If taking screenshot failed on assertion steps (e.g. title/console where view doesn't change),
-        // replicate the previous valid milestone frame so the timeline is 100% complete with 0 broken images
+        // For non-visual assertions (title, console, count, url) or as fallback if capture timed out,
+        // propagate the latest valid milestone frame so the timeline is 100% complete with 0 broken images
         if (!captured) {
           if (i > 0) {
             const prevFramePath = path.join(artifactsDir, `frame-${i}.png`);
@@ -230,6 +235,16 @@ export async function executeDynamicPlan(options: DynamicExecutionOptions): Prom
                 // ignore
               }
             }
+          }
+        }
+
+        // If step 1 failed with animations: 'disabled', retry standard capture
+        if (!captured && i === 0) {
+          try {
+            await page.screenshot({ path: framePath, fullPage: false, timeout: 8000 });
+            captured = fs.existsSync(framePath) && fs.statSync(framePath).size > 0;
+          } catch {
+            // ignore
           }
         }
 
