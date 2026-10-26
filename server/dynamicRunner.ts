@@ -354,8 +354,10 @@ async function executeActionStep(
       const locator = resolveLocator(page, step.target);
       const visibleLoc = locator.locator('visible=true');
       const targetLoc = (await visibleLoc.count().catch(() => 0)) > 0 ? visibleLoc.first() : locator.first();
-      await targetLoc.waitFor({ state: 'visible', timeout: 4000 });
-      await targetLoc.click({ timeout: 4000 });
+      await targetLoc.waitFor({ state: 'visible', timeout: 6000 });
+      await targetLoc.click({ timeout: 6000, noWaitAfter: true });
+      // Brief pause to allow any client-side route transition to trigger
+      await page.waitForTimeout(600);
       break;
     }
     case 'fill': {
@@ -446,8 +448,13 @@ async function executeAssertionStep(
       break;
     }
     case 'assert_url': {
-      const currentUrl = page.url();
       const expected = step.value || '';
+      let currentUrl = page.url();
+      // If previous click caused a transition that is still navigating, wait up to 6000ms
+      if (!currentUrl.includes(expected)) {
+        await page.waitForURL((url) => url.toString().includes(expected), { timeout: 6000 }).catch(() => {});
+        currentUrl = page.url();
+      }
       if (!currentUrl.includes(expected)) {
         throw new Error(`URL assertion failed.\nExpected: "${expected}"\nReceived: "${currentUrl}"`);
       }
