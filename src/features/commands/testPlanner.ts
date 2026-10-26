@@ -557,9 +557,9 @@ export function generateTestPlan(
           id: `step-${planId}-${stepIndex++}`,
           type: 'assertion',
           assertion: 'assert_visible',
-          target: 'h1, [role="heading"][aria-level="1"], h1:visible',
-          description: 'Assert primary top-level heading (h1) is visible in the viewport',
-          expectedOutcome: 'Primary h1 heading landmark is rendered and visible.',
+          target: 'h1, [role="heading"][aria-level="1"], h2, [role="heading"]',
+          description: 'Assert primary top-level heading (h1) or header landmark is visible in the viewport',
+          expectedOutcome: 'Primary heading landmark is rendered and visible.',
         });
         addedAssertionKeys.add('heading');
       }
@@ -581,7 +581,7 @@ export function generateTestPlan(
           id: `step-${planId}-${stepIndex++}`,
           type: 'assertion',
           assertion: 'assert_visible',
-          target: 'nav, header, [role="navigation"], .navbar, #nav',
+          target: 'header, nav, [role="navigation"], [role="banner"], #header, .header, #nav, .nav, .navbar',
           description: 'Assert navigation bar / header menu is rendered and visible',
           expectedOutcome: 'Main navigation landmark is present in document structure.',
         });
@@ -598,7 +598,7 @@ export function generateTestPlan(
           id: `step-${planId}-${stepIndex++}`,
           type: 'assertion',
           assertion: 'assert_visible',
-          target: 'input[type="search"], input[name="q"], input[name="search"], input[placeholder*="search" i]',
+          target: 'input[type="search"], [role="searchbox"], input[name*="search" i], input[name="q"], input[placeholder*="search" i], input[id*="search" i], input[type="text"]',
           description: 'Assert search input field is rendered and interactive',
           expectedOutcome: 'Search field is visible and accessible.',
         });
