@@ -30,7 +30,7 @@ export const TargetUrlInput: React.FC<TargetUrlInputProps> = ({
     setIsValidating(true);
     const timer = setTimeout(() => {
       validateTargetUrlApi(url)
-        .then((res) => {
+        .then((res: UrlValidationResult) => {
           if (active) {
             setValidation(res);
             setIsValidating(false);

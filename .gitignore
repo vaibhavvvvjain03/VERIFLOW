@@ -7,9 +7,9 @@ node_modules/
 dist/
 
 # Test output and local execution artifacts
-test-results/
-runs/
-tests/artifacts/
+/test-results/
+/runs/
+/tests/artifacts/
 *.log
 
 # Environment variables
