@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build artifacts
+dist/
+
+# Test output and local execution artifacts
+test-results/
+runs/
+tests/artifacts/
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Editor directories and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
