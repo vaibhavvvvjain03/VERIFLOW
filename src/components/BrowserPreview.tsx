@@ -124,6 +124,12 @@ export const BrowserPreview: React.FC<BrowserPreviewProps> = ({ currentRun, isRu
             <img
               src={activeFrame}
               alt="Browser execution frame"
+              onError={(e) => {
+                const fallback = previewFrames[0]?.imageUrl;
+                if (fallback && e.currentTarget.src !== fallback) {
+                  e.currentTarget.src = fallback;
+                }
+              }}
               style={{
                 maxWidth: '100%',
                 maxHeight: '440px',
@@ -242,6 +248,12 @@ export const BrowserPreview: React.FC<BrowserPreviewProps> = ({ currentRun, isRu
                 <img
                   src={frame.imageUrl}
                   alt={`Step ${frame.stepIndex}`}
+                  onError={(e) => {
+                    const fallback = previewFrames[0]?.imageUrl;
+                    if (fallback && e.currentTarget.src !== fallback) {
+                      e.currentTarget.src = fallback;
+                    }
+                  }}
                   style={{ width: '64px', height: '38px', objectFit: 'cover', borderRadius: '2px' }}
                 />
                 <span style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', marginTop: '2px', color: 'var(--text-muted)' }}>
