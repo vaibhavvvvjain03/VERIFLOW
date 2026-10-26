@@ -20,7 +20,7 @@
 
 <br/>
 
-![Veriflow Cover Banner](assets/veriflow_hero_banner.jpg)
+![Veriflow Cover Banner](assets/veriflow_hero_banner.png)
 
 </div>
 

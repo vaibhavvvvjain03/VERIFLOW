@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 1200px;
+      height: 460px;
+      margin: 0;
+      padding: 24px;
+      background: transparent;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .banner-card {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #FFFDF9 0%, #FAF5FF 45%, #F0F7FF 100%);
+      border: 2px solid #0F172A;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 64px;
+      box-shadow: 6px 6px 0px #0F172A;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .banner-dots {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(#94A3B8 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    .content-left {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #EDE9FE;
+      color: #6D28D9;
+      border: 1.5px solid #0F172A;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      box-shadow: 2px 2px 0px #0F172A;
+      align-self: flex-start;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 58px;
+      font-weight: 900;
+      color: #0F172A;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+    }
+
+    .brand-title span {
+      color: #6D28D9;
+    }
+
+    .brand-tagline {
+      font-size: 20px;
+      color: #334155;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .feature-pills {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .feat-pill {
+      background: #FFFFFF;
+      border: 1.5px solid #0F172A;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0F172A;
+      box-shadow: 2px 2px 0px #0F172A;
+    }
+
+    .mascot-right {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-right: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="banner-card">
+    <div class="banner-dots"></div>
+
+    <div class="content-left">
+      <div class="badge-pill">
+        <span class="badge-dot"></span>
+        Voice-Directed Browser Testing
+      </div>
+      <h1 class="brand-title">Veri<span>flow</span></h1>
+      <p class="brand-tagline">
+        Say what to test. Watch real Chromium execute.<br>
+        Inspect genuine assertion evidence.
+      </p>
+      <div class="feature-pills">
+        <div class="feat-pill">🎙️ Wispr Flow Dictation</div>
+        <div class="feat-pill">⚡ Headless Chromium</div>
+        <div class="feat-pill">🛡️ SSRF Protected</div>
+        <div class="feat-pill">📊 Verified Reports</div>
+      </div>
+    </div>
+
+    <div class="mascot-right">
+      <!-- Exact VeriHero SVG from src/components/CharacterSketches.tsx -->
+      <svg viewBox="0 0 320 320" width="340" height="340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="heroBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#3B82F6" />
+            <stop offset="100%" stop-color="#1D4ED8" />
+          </linearGradient>
+          <linearGradient id="heroAmberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FBBF24" />
+            <stop offset="100%" stop-color="#F59E0B" />
+          </linearGradient>
+        </defs>
+
+        <!-- Subtle ground shadow -->
+        <ellipse cx="160" cy="295" rx="85" ry="12" fill="#CBD5E1" opacity="0.6" />
+
+        <!-- Left Arm holding Checklist -->
+        <path d="M125 185 C100 195 80 215 85 240" stroke="#0F172A" stroke-width="3.5" stroke-linecap="round" />
+        <!-- Clipboard -->
+        <g transform="rotate(-10 90 235)">
+          <rect x="55" y="195" width="55" height="75" rx="6" fill="#F8FAFC" stroke="#0F172A" stroke-width="3" />
+          <rect x="70" y="188" width="25" height="10" rx="3" fill="#E2E8F0" stroke="#0F172A" stroke-width="2.5" />
+          <line x1="65" y1="215" x2="95" y2="215" stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round" />
+          <line x1="65" y1="228" x2="92" y2="228" stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round" />
+          <line x1="65" y1="241" x2="85" y2="241" stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round" />
+          <path d="M96 238 L99 242 L105 234" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="102" cy="255" r="3" fill="#3B82F6" />
+        </g>
+
+        <!-- Body / Cobalt Sweater -->
+        <path d="M120 180 C110 210 115 270 125 285 L195 285 C205 270 210 210 200 180 Z" fill="url(#heroBlueGrad)" stroke="#0F172A" stroke-width="3.5" stroke-linejoin="round" />
+        <line x1="160" y1="180" x2="160" y2="285" stroke="#1E40AF" stroke-width="2" stroke-dasharray="4 4" />
+        <path d="M140 180 Q160 195 180 180" stroke="#FBBF24" stroke-width="4" stroke-linecap="round" fill="none" />
+
+        <!-- Legs / Boots -->
+        <rect x="135" y="285" width="18" height="15" rx="3" fill="#0F172A" />
+        <rect x="168" y="285" width="18" height="15" rx="3" fill="#0F172A" />
+
+        <!-- Neck -->
+        <rect x="148" y="160" width="24" height="22" fill="#FDE68A" stroke="#0F172A" stroke-width="3" />
+
+        <!-- Head -->
+        <circle cx="160" cy="120" r="50" fill="#FEF3C7" stroke="#0F172A" stroke-width="3.5" />
+
+        <!-- Hair curls -->
+        <path d="M115 110 Q120 75 160 75 Q200 75 205 110" fill="#0F172A" stroke="#0F172A" stroke-width="3.5" />
+        <path d="M110 120 C108 100 115 95 125 90" stroke="#0F172A" stroke-width="3.5" stroke-linecap="round" />
+        <path d="M210 120 C212 100 205 95 195 90" stroke="#0F172A" stroke-width="3.5" stroke-linecap="round" />
+
+        <!-- Scout Cap -->
+        <path d="M120 85 C125 55 195 55 200 85 Z" fill="url(#heroAmberGrad)" stroke="#0F172A" stroke-width="3.5" />
+        <path d="M108 85 Q160 78 212 85" stroke="#0F172A" stroke-width="4.5" stroke-linecap="round" />
+        <circle cx="160" cy="68" r="6" fill="#FFFFFF" stroke="#0F172A" stroke-width="2" />
+
+        <!-- Round Glasses -->
+        <circle cx="142" cy="122" r="14" fill="#FFFFFF" fill-opacity="0.85" stroke="#0F172A" stroke-width="3" />
+        <circle cx="178" cy="122" r="14" fill="#FFFFFF" fill-opacity="0.85" stroke="#0F172A" stroke-width="3" />
+        <line x1="156" y1="122" x2="164" y2="122" stroke="#0F172A" stroke-width="3" stroke-linecap="round" />
+
+        <!-- Happy Eyes -->
+        <circle cx="142" cy="122" r="4.5" fill="#0F172A" />
+        <circle cx="140" cy="120" r="1.5" fill="#FFFFFF" />
+        <circle cx="178" cy="122" r="4.5" fill="#0F172A" />
+        <circle cx="176" cy="120" r="1.5" fill="#FFFFFF" />
+
+        <!-- Eyebrows -->
+        <path d="M133 103 Q142 98 151 102" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round" />
+        <path d="M169 102 Q178 98 187 103" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round" />
+
+        <!-- Rosy Cheeks -->
+        <circle cx="127" cy="132" r="6" fill="#FCA5A5" opacity="0.6" />
+        <circle cx="193" cy="132" r="6" fill="#FCA5A5" opacity="0.6" />
+
+        <!-- Cheerful Smile -->
+        <path d="M150 138 Q160 148 170 138" stroke="#0F172A" stroke-width="3" stroke-linecap="round" fill="none" />
+
+        <!-- Right Arm holding Giant Magnifying Glass -->
+        <path d="M195 185 C220 195 235 185 245 165" stroke="#0F172A" stroke-width="3.5" stroke-linecap="round" />
+        <!-- Magnifying Glass -->
+        <g transform="translate(195, 80) rotate(-15)">
+          <rect x="42" y="80" width="12" height="40" rx="4" fill="#B45309" stroke="#0F172A" stroke-width="2.5" />
+          <circle cx="48" cy="50" r="32" fill="#E0F2FE" fill-opacity="0.75" stroke="#0F172A" stroke-width="4" />
+          <path d="M30 40 A22 22 0 0 1 66 40" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.9" />
+          <path d="M48 42 L50 48 L56 50 L50 52 L48 58 L46 52 L40 50 L46 48 Z" fill="#F59E0B" />
+        </g>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>
