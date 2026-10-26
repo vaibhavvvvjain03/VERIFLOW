@@ -109,18 +109,20 @@ export async function executeDynamicPlan(options: DynamicExecutionOptions): Prom
 
     context = await browser.newContext({
       viewport,
+      userAgent:
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
       ignoreHTTPSErrors: false, // URL-018: Never disable TLS validation globally
     });
 
-    // Bounded timeouts: action 4000ms, navigation 15000ms
+    // Bounded timeouts: action 4000ms, navigation 20000ms
     context.setDefaultTimeout(4000);
-    context.setDefaultNavigationTimeout(15000);
+    context.setDefaultNavigationTimeout(20000);
 
     page = await context.newPage();
 
-    // Abort third-party tracking, analytics, and heavy ads that stall container CPU
+    // Abort known third-party tracking, ad pixels, and telemetry without blocking first-party site assets
     await page.route(
-      /(google-analytics|doubleclick|googletagmanager|analytics|hotjar|clarity\.ms|segment|facebook\.net|connect\.facebook)/i,
+      /(\.google-analytics\.com|\.googletagmanager\.com|\.doubleclick\.net|\.hotjar\.com|\.clarity\.ms|\.segment\.com|connect\.facebook\.net)/i,
       (route) => route.abort().catch(() => {})
     );
 
@@ -340,8 +342,9 @@ async function executeActionStep(
       if (!validation.valid) {
         throw new Error(`Navigation blocked: ${validation.error}`);
       }
-      // Use domcontentloaded for fast load on arbitrary public sites
-      await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
+      // Establish initial HTTP commit, avoiding stalls on sites with background event streams
+      await page.goto(targetUrl, { waitUntil: 'commit', timeout: 20000 });
+      await page.waitForLoadState('domcontentloaded', { timeout: 10000 }).catch(() => {});
       // Brief stabilization for initial client bundle hydration
       await page.waitForTimeout(600);
       break;
