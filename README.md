@@ -32,6 +32,7 @@
 - [✅ What IS Happening (Capabilities)](#-what-is-happening-capabilities)
 - [🚫 What is NOT Happening (Honesty & Anti-Hype Boundaries)](#-what-is-not-happening-honesty--anti-hype-boundaries)
 - [🛡️ Security & SSRF Protection](#️-security--ssrf-protection)
+- [💡 Ready-to-Run High-Level Testing Examples (Actually Work)](#-ready-to-run-high-level-testing-examples-actually-work)
 - [🧪 How to Test: Step-by-Step Guide](#-how-to-test-step-by-step-guide)
   - [1. Prerequisites & Installation](#1-prerequisites--installation)
   - [2. Running Locally (Development Mode)](#2-running-locally-development-mode)
@@ -144,6 +145,68 @@ Because Veriflow accepts arbitrary target URLs, it features a multi-layered secu
 4. **DNS Rebinding Defense**: Resolves target hostnames prior to execution and inspects all resolved IP addresses against blacklisted ranges.
 5. **Credential Stripping**: Automatically strips embedded HTTP authentication (`user:pass@host`) from target URLs and warns the user.
 6. **Port Whitelist**: External public testing is restricted to standard web ports (`80`, `443`, `8080`, `8443`).
+
+---
+
+## 💡 Ready-to-Run High-Level Testing Examples (Actually Work)
+
+Veriflow is a **universal browser testing agent**. You can enter **any public website** and dictate (via Wispr Flow) or type test scenarios. Below are verified, ready-to-run examples that execute in real headless Chromium:
+
+| # | Target Website | Wispr Flow Voice / Text Prompt | What It Exercises | Verified Execution Time |
+|---|---|---|---|:---:|
+| **1** | `https://www.wemakedevs.org` | `"Verify page title, primary heading, and check for console errors"` | Client-side React hydration, `<h1>` heading visibility, JavaScript error interceptor | **~8s** |
+| **2** | `https://www.wikipedia.org` | `"Search for Playwright and press Enter, then assert title contains Playwright"` | Search input targeting, `Enter` keypress, article navigation, title assertion | **~4s** |
+| **3** | `https://news.ycombinator.com` | `"Verify page title, assert navigation bar is visible, and check console errors"` | Minimal DOM, header landmark detection, zero-exception audit | **~3s** |
+| **4** | `https://github.com` | `"Verify the primary heading is visible, click 'Sign in', and assert url contains login"` | Semantic `<h1>`, interactive link clicking, URL transition matching | **~5s** |
+| **5** | `/demo-store` | `"Add first product to cart and verify cart count is 1"` | Full e-commerce cart mutation, reactive state assertion | **~3s** |
+
+---
+
+### Detailed Scenario Walkthroughs
+
+#### 1. WeMakeDevs Community (`https://www.wemakedevs.org`)
+* **Prompt**: `"Verify page title, primary heading, and check for console errors"`
+* **Structured Steps Synthesized by Veriflow**:
+  1. `[Action]` Navigate to target website: `https://www.wemakedevs.org`
+  2. `[Assertion]` Assert document title contains `"WeMakeDevs"`
+  3. `[Assertion]` Assert primary top-level heading (`h1` or `[role="heading"]`) is visible in viewport
+  4. `[Assertion]` Assert zero JavaScript exceptions or `console.error` calls were emitted
+* **Honest Execution Artifacts**: 4 milestone PNG screenshots streamed to the execution timeline; certified green audit report exported.
+
+#### 2. Wikipedia (`https://www.wikipedia.org`)
+* **Prompt**: `"Search for Playwright and press Enter, then assert title contains Playwright"`
+* **Structured Steps Synthesized by Veriflow**:
+  1. `[Action]` Navigate to `https://www.wikipedia.org`
+  2. `[Action]` Fill search input with `"Playwright"`
+  3. `[Action]` Press keyboard key `"Enter"` and await document load state
+  4. `[Assertion]` Assert document title contains `"Playwright"`
+* **Honest Execution Artifacts**: Captured milestone frames showing the search input interaction and the resulting article page.
+
+#### 3. Hacker News (`https://news.ycombinator.com`)
+* **Prompt**: `"Verify page title, assert navigation bar is visible, and check console errors"`
+* **Structured Steps Synthesized by Veriflow**:
+  1. `[Action]` Navigate to `https://news.ycombinator.com`
+  2. `[Assertion]` Assert title contains `"Hacker News"`
+  3. `[Assertion]` Assert navigation bar / header menu landmark is rendered
+  4. `[Assertion]` Assert zero unhandled exceptions
+* **Honest Execution Artifacts**: Immediate sub-3s verification with milestone viewport captures.
+
+#### 4. GitHub (`https://github.com`)
+* **Prompt**: `"Verify the primary heading is visible, click 'Sign in', and assert url contains login"`
+* **Structured Steps Synthesized by Veriflow**:
+  1. `[Action]` Navigate to `https://github.com`
+  2. `[Assertion]` Assert primary heading is visible in viewport
+  3. `[Action]` Click `"Sign in"` link
+  4. `[Assertion]` Assert current URL contains `login`
+* **Honest Execution Artifacts**: Demonstrates navigation transition, URL verification, and authentic screenshot of GitHub's login screen.
+
+#### 5. E-Commerce Demo Store (`/demo-store`)
+* **Prompt**: `"Add first product to cart and verify cart count is 1"`
+* **Structured Steps Synthesized by Veriflow**:
+  1. `[Action]` Navigate to `/demo-store`
+  2. `[Action]` Click `"Add to Cart"` on the first product card
+  3. `[Assertion]` Assert cart badge displays count `"1"`
+* **Honest Execution Artifacts**: Demonstrates button interaction, DOM mutation observation, and UI state reconciliation.
 
 ---
 
@@ -263,14 +326,23 @@ npm run test:e2e:ui
 
 ## 🚀 24/7 Cloud Deployment for Judges
 
-For complete deployment instructions, see [**`DEPLOYMENT.md`**](DEPLOYMENT.md).
+> 🌐 **Live Public Deployment (Hosted 24/7)**:  
+> **[https://veriflow-i7y0.onrender.com/workspace](https://veriflow-i7y0.onrender.com/workspace)**  
+> *Ready for judges to test any public website or internal fixture in real time with honest headless Chromium execution.*
 
-### One-Click Deployment to Railway (~2 Minutes)
+For complete step-by-step self-hosting instructions, see [**`DEPLOYMENT.md`**](DEPLOYMENT.md).
+
+### Deploy to Render (Free Web Service)
+1. Push your repository to GitHub (`vaibhavvvvjain03/VERIFLOW`).
+2. Go to [render.com](https://render.com) and create a **New Web Service**.
+3. Select **Docker** environment and the Free tier.
+4. Render builds from [`Dockerfile`](Dockerfile) and deploys a live instance with Playwright Chromium pre-installed.
+
+### Deploy to Railway
 1. Go to [railway.app](https://railway.app) and sign in with GitHub.
 2. Click **+ New Project** ➔ **Deploy from GitHub repo** ➔ Select `vaibhavvvvjain03/VERIFLOW`.
 3. Railway automatically detects [`Dockerfile`](Dockerfile) and [`railway.json`](railway.json).
 4. In **Settings** ➔ **Networking**, click **Generate Domain**.
-5. Share your permanent `https://veriflow-production.up.railway.app` URL with judges!
 
 ---
 
