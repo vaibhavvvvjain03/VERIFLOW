@@ -327,8 +327,9 @@ npm run test:e2e:ui
 ## 🚀 24/7 Cloud Deployment for Judges
 
 > 🌐 **Live Public Deployment (Hosted 24/7)**:  
-> **[https://veriflow-i7y0.onrender.com/workspace](https://veriflow-i7y0.onrender.com/workspace)**  
-> *Ready for judges to test any public website or internal fixture in real time with honest headless Chromium execution.*
+> **[https://veriflow-i7y0.onrender.com](https://veriflow-i7y0.onrender.com)**  
+> *(Direct Workspace Console: [https://veriflow-i7y0.onrender.com/workspace](https://veriflow-i7y0.onrender.com/workspace))*  
+> *Ready for judges to experience the platform, meet Veri, and test any public website in real time.*
 
 For complete step-by-step self-hosting instructions, see [**`DEPLOYMENT.md`**](DEPLOYMENT.md).
 
