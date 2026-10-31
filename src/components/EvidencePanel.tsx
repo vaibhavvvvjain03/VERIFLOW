@@ -142,7 +142,7 @@ export const EvidencePanel: React.FC<EvidencePanelProps> = ({
 
         {result ? (
           <>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', fontSize: '0.85rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem', fontSize: '0.85rem' }}>
               <div style={{ border: '1px solid var(--border-subtle)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', backgroundColor: 'var(--bg-canvas)' }}>
                 <span className="editorial-overline">Execution Status</span>
                 <div style={{ fontWeight: 800, textTransform: 'uppercase', marginTop: '0.2rem', color: isPass ? 'var(--status-pass)' : 'var(--status-fail)' }}>

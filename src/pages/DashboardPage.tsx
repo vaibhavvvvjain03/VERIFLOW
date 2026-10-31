@@ -42,6 +42,14 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const [selectedUniversalId, setSelectedUniversalId] = useState<string>('CMD-TITLE');
   const [leftTab, setLeftTab] = useState<'commands' | 'telemetry'>('commands');
   const [rightTab, setRightTab] = useState<'preview' | 'evidence'>('preview');
+  const [mobilePane, setMobilePane] = useState<'both' | 'commands' | 'browser'>('commands');
+
+  // Auto-switch mobile view to live preview when execution begins
+  React.useEffect(() => {
+    if (isRunning) {
+      setMobilePane((prev) => (prev === 'commands' ? 'browser' : prev));
+    }
+  }, [isRunning]);
 
   const activePlanId = currentRun?.plan?.id;
   const effectiveSelectedId = activePlanId || selectedUniversalId;
@@ -80,6 +88,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   const handleRunCommandDirect = (cmdId: string) => {
     setSelectedUniversalId(cmdId);
     setLeftTab('telemetry');
+    setMobilePane('browser');
     const plan = createUniversalPlan(cmdId, targetUrl);
     if (plan) {
       onConfirmPlan(plan);
@@ -123,6 +132,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 border: '1.5px solid var(--border-subtle)',
                 color: 'var(--text-ink)',
                 fontWeight: 700,
+                maxWidth: '100%',
+                overflowWrap: 'anywhere',
+                wordBreak: 'break-all',
               }}
             >
               {targetUrl}
@@ -202,6 +214,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               plan={pendingPlan}
               onExecutePlan={(p) => {
                 setLeftTab('telemetry');
+                setMobilePane('browser');
                 onConfirmPlan(p);
               }}
               onDismiss={onDismissPlan}
@@ -210,18 +223,54 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           </div>
         )}
 
+        {/* MOBILE VIEW SELECTOR (Screens <= 1024px) */}
+        <div className="mobile-cockpit-bar">
+          <button
+            type="button"
+            className={`mobile-cockpit-tab ${mobilePane === 'commands' ? 'active' : ''}`}
+            onClick={() => setMobilePane('commands')}
+            id="mobile-tab-commands"
+          >
+            <Compass size={14} />
+            <span>Commands</span>
+            {activeSteps.length > 0 && leftTab === 'telemetry' && (
+              <span className="mobile-tab-badge">{activeSteps.length}</span>
+            )}
+          </button>
+
+          <button
+            type="button"
+            className={`mobile-cockpit-tab ${mobilePane === 'browser' ? 'active' : ''}`}
+            onClick={() => setMobilePane('browser')}
+            id="mobile-tab-browser"
+          >
+            <Eye size={14} />
+            <span>Browser & Proof</span>
+            {isRunning && (
+              <span className="mobile-tab-badge" style={{ backgroundColor: '#22c55e', color: '#fff' }}>
+                ● LIVE
+              </span>
+            )}
+          </button>
+
+          <button
+            type="button"
+            className={`mobile-cockpit-tab ${mobilePane === 'both' ? 'active' : ''}`}
+            onClick={() => setMobilePane('both')}
+            id="mobile-tab-both"
+          >
+            <span>Both</span>
+          </button>
+        </div>
+
         {/* 2-COLUMN SYNCHRONIZED COCKPIT (One-Hand Ergonomics, zero vertical blowout) */}
         <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(380px, 42%) minmax(450px, 58%)',
-            gap: '1rem',
-            alignItems: 'start',
-          }}
           className="cockpit-grid"
+          data-mobile-pane={mobilePane}
         >
           {/* LEFT PANE: COMMAND & EXECUTION CENTER */}
           <div
+            className="cockpit-pane-left"
             style={{
               backgroundColor: leftTab === 'commands' ? '#fffdfa' : '#f8fcff',
               border: leftTab === 'commands' ? '1.5px solid #fde68a' : '1.5px solid #7dd3fc',
@@ -229,8 +278,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               boxShadow: leftTab === 'commands'
                 ? '3px 3px 0px rgba(217, 119, 6, 0.22)'
                 : '3px 3px 0px rgba(2, 132, 199, 0.22)',
-              display: 'flex',
-              flexDirection: 'column',
               overflow: 'hidden',
               transition: 'all 0.2s ease',
             }}
@@ -319,7 +366,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             </div>
 
             {/* Left Content Area */}
-            <div style={{ padding: '0.85rem', maxHeight: '520px', overflowY: 'auto' }}>
+            <div className="cockpit-scroll-area">
               {leftTab === 'commands' ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {UNIVERSAL_COMMANDS.map((cmd) => {
@@ -457,13 +504,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
           {/* RIGHT PANE: LIVE CHROMIUM PREVIEW & EVIDENCE */}
           <div
+            className="cockpit-pane-right"
             style={{
               backgroundColor: rightTab === 'preview' ? '#ffffff' : '#fffafa',
               border: rightTab === 'preview' ? '2px solid #0f172a' : '1.5px solid #fca5a5',
               borderRadius: 'var(--radius-md)',
               boxShadow: rightTab === 'preview' ? '4px 4px 0px #0f172a' : '3px 3px 0px rgba(225, 29, 72, 0.22)',
-              display: 'flex',
-              flexDirection: 'column',
               overflow: 'hidden',
               transition: 'all 0.2s ease',
             }}
@@ -562,7 +608,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             </div>
 
             {/* Right Pane Body */}
-            <div style={{ padding: '0.85rem', maxHeight: '580px', overflowY: 'auto' }}>
+            <div className="cockpit-scroll-area">
               {rightTab === 'preview' ? (
                 <BrowserPreview currentRun={currentRun} isRunning={isRunning} />
               ) : (

@@ -134,7 +134,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenWorkspace }) => 
       </section>
 
       {/* 2. Bold Accent Statement Band */}
-      <section style={{ backgroundColor: 'var(--bg-coral)', padding: '2.5rem 0', color: '#ffffff', margin: '1rem 0 3rem' }}>
+      <section className="coral-statement-band" style={{ margin: '1rem 0 2.5rem' }}>
         <div className="container-editorial coral-band-inner">
           <div className="coral-main-title">
             Simple to understand.<br />
@@ -155,11 +155,11 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenWorkspace }) => 
         <div className="editorial-overline">
           How It Works in 3 Simple Steps
         </div>
-        <h2 style={{ fontSize: '2.25rem', fontWeight: 800, letterSpacing: '-0.03em', marginTop: '0.5rem' }}>
+        <h2 style={{ fontSize: 'clamp(1.6rem, 1.2rem + 1.8vw, 2.25rem)', fontWeight: 800, letterSpacing: '-0.03em', marginTop: '0.5rem' }}>
           Testing made effortless for everyone.
         </h2>
 
-        <div className="walkthrough-grid" style={{ marginTop: '2.5rem' }}>
+        <div className="walkthrough-grid">
           {/* Step 1 */}
           <div className="walkthrough-col" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div style={{ height: '140px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', marginBottom: '1rem' }}>
@@ -199,20 +199,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenWorkspace }) => 
       </section>
 
       {/* 4. The 7 Universal Commands Showcase */}
-      <section className="container-editorial" style={{ padding: '3rem 2rem 4rem' }}>
-        <div
-          style={{
-            border: '1.5px solid var(--border-dark)',
-            borderRadius: 'var(--radius-lg)',
-            backgroundColor: 'var(--bg-surface)',
-            padding: '2.5rem',
-            boxShadow: 'var(--shadow-retro)',
-          }}
-        >
+      <section className="container-editorial commands-showcase-section">
+        <div className="commands-showcase-card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem' }}>
             <div>
               <div className="editorial-overline">Universal Test Commands</div>
-              <h3 style={{ fontSize: '1.85rem', fontWeight: 800, letterSpacing: '-0.02em', marginTop: '0.25rem' }}>
+              <h3 style={{ fontSize: 'clamp(1.4rem, 1.1rem + 1.2vw, 1.85rem)', fontWeight: 800, letterSpacing: '-0.02em', marginTop: '0.25rem' }}>
                 7 Commands Testable on Every Website
               </h3>
             </div>
@@ -222,7 +214,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenWorkspace }) => 
             </button>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))', gap: '1.25rem' }}>
+          <div className="commands-grid">
             {UNIVERSAL_COMMANDS.map((cmd) => (
               <div
                 key={cmd.id}
@@ -260,28 +252,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onOpenWorkspace }) => 
       </section>
 
       {/* 5. Final CTA Banner with Veri Celebration */}
-      <section className="container-editorial" style={{ marginBottom: '4rem' }}>
-        <div
-          style={{
-            backgroundColor: 'var(--bg-lavender-subtle)',
-            border: '1.5px solid var(--border-dark)',
-            borderRadius: 'var(--radius-lg)',
-            padding: '3rem 2.5rem',
-            boxShadow: 'var(--shadow-retro)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '2rem',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-            <VeriSuccess width={100} height={100} />
+      <section className="container-editorial">
+        <div className="final-cta-card">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+            <VeriSuccess width={90} height={90} />
             <div>
               <div className="editorial-overline" style={{ color: 'var(--bg-lavender-deep)' }}>
                 Ready to Verify Any Site?
               </div>
-              <div style={{ fontSize: '1.75rem', fontWeight: 800, letterSpacing: '-0.02em', marginTop: '0.35rem', color: 'var(--text-ink)' }}>
+              <div style={{ fontSize: 'clamp(1.35rem, 1.1rem + 1vw, 1.75rem)', fontWeight: 800, letterSpacing: '-0.02em', marginTop: '0.35rem', color: 'var(--text-ink)' }}>
                 Launch the workspace and speak your test.
               </div>
               <div style={{ fontSize: '0.88rem', color: 'var(--text-body)', marginTop: '0.35rem' }}>

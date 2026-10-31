@@ -63,15 +63,7 @@ export const TargetUrlInput: React.FC<TargetUrlInputProps> = ({
 
   return (
     <div
-      style={{
-        backgroundColor: '#f0fdf4',
-        border: '1.5px solid #86efac',
-        borderRadius: 'var(--radius-md)',
-        padding: '1.15rem 1.35rem',
-        marginBottom: '1rem',
-        boxShadow: '3px 3px 0px rgba(22, 101, 52, 0.22)',
-        transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-      }}
+      className="target-url-card"
       id="target-url-container"
     >
       <div
@@ -84,7 +76,7 @@ export const TargetUrlInput: React.FC<TargetUrlInputProps> = ({
           gap: '0.5rem',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
           <div
             style={{
               width: '24px',
@@ -94,6 +86,7 @@ export const TargetUrlInput: React.FC<TargetUrlInputProps> = ({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              flexShrink: 0,
             }}
           >
             <Globe size={14} color="#15803d" />
@@ -119,14 +112,15 @@ export const TargetUrlInput: React.FC<TargetUrlInputProps> = ({
             padding: '0.2rem 0.55rem',
             borderRadius: 'var(--radius-pill)',
             border: '1px solid #86efac',
+            flexShrink: 0,
           }}
         >
           SSRF SECURITY SHIELD ACTIVE
         </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
-        <div style={{ position: 'relative', flex: '1 1 320px' }}>
+      <div style={{ display: 'flex', gap: '0.65rem', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ position: 'relative', flex: '1 1 240px', minWidth: 0, width: '100%' }}>
           <input
             id="target-url-input"
             type="text"
@@ -176,16 +170,18 @@ export const TargetUrlInput: React.FC<TargetUrlInputProps> = ({
         </div>
 
         {/* Quick Presets */}
-        <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+        <div className="target-presets-strip">
           {quickPresets.map((preset) => (
             <button
               key={preset.url}
               type="button"
               onClick={() => onChangeUrl(preset.url)}
               disabled={isRunning}
+              className="preset-chip-btn"
               style={{
                 fontSize: '0.74rem',
-                padding: '0.4rem 0.65rem',
+                minHeight: '34px',
+                padding: '0.35rem 0.65rem',
                 backgroundColor: url === preset.url ? '#dcfce7' : '#ffffff',
                 border: url === preset.url ? '1.5px solid #16a34a' : '1px solid #bbf7d0',
                 color: url === preset.url ? '#14532d' : '#166534',
@@ -193,6 +189,8 @@ export const TargetUrlInput: React.FC<TargetUrlInputProps> = ({
                 cursor: 'pointer',
                 fontWeight: url === preset.url ? 800 : 600,
                 transition: 'all 0.15s ease',
+                display: 'inline-flex',
+                alignItems: 'center',
               }}
             >
               {preset.label}
@@ -236,8 +234,8 @@ export const TargetUrlInput: React.FC<TargetUrlInputProps> = ({
               }}
               id="url-valid-pill"
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <CheckCircle size={14} color="#16a34a" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexWrap: 'wrap', wordBreak: 'break-word', overflowWrap: 'anywhere' }}>
+                <CheckCircle size={14} color="#16a34a" style={{ flexShrink: 0 }} />
                 <span>
                   <strong>Target Validated:</strong> {validation.normalizedUrl}
                 </span>

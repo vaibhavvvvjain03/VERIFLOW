@@ -164,7 +164,7 @@ export const App: React.FC = () => {
     : 'idle';
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column' }}>
       {showIntro && <VeriWelcomeIntro onComplete={() => setShowIntro(false)} />}
       <Header
         currentRoute={currentRoute}

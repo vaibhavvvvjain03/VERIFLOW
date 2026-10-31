@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, LayoutDashboard, Home } from 'lucide-react';
 import { RunStatus } from '../../shared/types';
 import { VeriBrandLogo } from './CharacterSketches';
 
@@ -13,7 +13,7 @@ export const Header: React.FC<HeaderProps> = ({ currentRoute, onNavigate, runSta
   return (
     <header className="editorial-header">
       <div className="container-editorial editorial-header-inner">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.75rem' }}>
+        <div className="header-brand-wrap">
           <a
             href="/"
             onClick={(e) => {
@@ -21,30 +21,34 @@ export const Header: React.FC<HeaderProps> = ({ currentRoute, onNavigate, runSta
               onNavigate('/');
             }}
             id="brand-logo-link"
-            style={{ textDecoration: 'none', cursor: 'pointer' }}
+            style={{ textDecoration: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+            aria-label="Veriflow Homepage"
           >
-            <VeriBrandLogo size={36} />
+            <VeriBrandLogo size={32} />
           </a>
         </div>
 
-        <nav className="editorial-nav">
+        <nav className="editorial-nav" aria-label="Main Navigation">
           <button
             onClick={() => onNavigate('/')}
             className={`editorial-nav-link ${currentRoute === '/' ? 'active' : ''}`}
             id="nav-link-overview"
           >
-            Overview
+            <Home size={14} className="nav-icon-mobile" />
+            <span>Overview</span>
           </button>
           <button
             onClick={() => onNavigate('/workspace')}
             className={`editorial-nav-link ${currentRoute === '/workspace' ? 'active' : ''}`}
             id="nav-link-workspace"
           >
-            Testing Workspace
+            <LayoutDashboard size={14} className="nav-icon-mobile" />
+            <span className="nav-text-desktop">Testing Workspace</span>
+            <span className="nav-text-mobile">Workspace</span>
           </button>
         </nav>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div className="header-actions-wrap">
           {/* Status Badge */}
           <div
             className={`status-pill ${
@@ -59,8 +63,8 @@ export const Header: React.FC<HeaderProps> = ({ currentRoute, onNavigate, runSta
             id="global-status-badge"
           >
             {runStatus === 'running' && '● RUNNING'}
-            {runStatus === 'passed' && '✓ ALL PASS'}
-            {runStatus === 'failed' && '✕ FAILURES'}
+            {runStatus === 'passed' && '✓ PASS'}
+            {runStatus === 'failed' && '✕ FAIL'}
             {runStatus === 'idle' && '○ IDLE'}
             {runStatus === 'error' && '⚠ ERROR'}
             {runStatus === 'queued' && '… QUEUED'}
@@ -69,10 +73,10 @@ export const Header: React.FC<HeaderProps> = ({ currentRoute, onNavigate, runSta
           {currentRoute !== '/workspace' && (
             <button
               onClick={() => onNavigate('/workspace')}
-              className="btn-editorial-pill"
+              className="btn-editorial-pill header-cta-desktop"
               id="header-open-workspace-btn"
             >
-              <span>Open Workspace</span>
+              <span>Workspace</span>
               <ArrowRight size={14} />
             </button>
           )}

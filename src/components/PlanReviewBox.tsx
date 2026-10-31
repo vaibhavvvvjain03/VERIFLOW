@@ -157,43 +157,36 @@ export const PlanReviewBox: React.FC<PlanReviewBoxProps> = ({
         {editedPlan.steps.map((step, idx) => (
           <div
             key={step.id}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.75rem',
-              padding: '0.5rem 0.75rem',
-              backgroundColor: '#ffffff',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: 'var(--radius-xs)',
-              fontSize: '0.82rem',
-            }}
+            className="plan-step-row"
           >
-            <span
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontWeight: 700,
-                fontSize: '0.75rem',
-                color: 'var(--text-muted)',
-                minWidth: '20px',
-              }}
-            >
-              {idx + 1}.
-            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontWeight: 700,
+                  fontSize: '0.75rem',
+                  color: 'var(--text-muted)',
+                  minWidth: '20px',
+                }}
+              >
+                {idx + 1}.
+              </span>
 
-            <span
-              style={{
-                padding: '0.15rem 0.45rem',
-                borderRadius: 'var(--radius-xs)',
-                fontSize: '0.7rem',
-                fontWeight: 700,
-                fontFamily: 'var(--font-mono)',
-                textTransform: 'uppercase',
-                backgroundColor: step.type === 'assertion' ? '#ecfdf5' : 'var(--bg-lavender-subtle)',
-                color: step.type === 'assertion' ? '#047857' : 'var(--bg-lavender-deep)',
-              }}
-            >
-              {step.type === 'assertion' ? step.assertion : step.action}
-            </span>
+              <span
+                style={{
+                  padding: '0.15rem 0.45rem',
+                  borderRadius: 'var(--radius-xs)',
+                  fontSize: '0.7rem',
+                  fontWeight: 700,
+                  fontFamily: 'var(--font-mono)',
+                  textTransform: 'uppercase',
+                  backgroundColor: step.type === 'assertion' ? '#ecfdf5' : 'var(--bg-lavender-subtle)',
+                  color: step.type === 'assertion' ? '#047857' : 'var(--bg-lavender-deep)',
+                }}
+              >
+                {step.type === 'assertion' ? step.assertion : step.action}
+              </span>
+            </div>
 
             {isEditing ? (
               <input
@@ -201,7 +194,8 @@ export const PlanReviewBox: React.FC<PlanReviewBoxProps> = ({
                 value={step.description}
                 onChange={(e) => handleUpdateStepDescription(idx, e.target.value)}
                 style={{
-                  flex: 1,
+                  flex: '1 1 200px',
+                  minWidth: 0,
                   padding: '0.25rem 0.5rem',
                   fontSize: '0.82rem',
                   border: '1px solid var(--border-subtle)',
@@ -210,11 +204,13 @@ export const PlanReviewBox: React.FC<PlanReviewBoxProps> = ({
                 }}
               />
             ) : (
-              <span style={{ flex: 1, color: 'var(--text-main)' }}>{step.description}</span>
+              <span style={{ flex: '1 1 200px', minWidth: 0, color: 'var(--text-main)', wordBreak: 'break-word' }}>
+                {step.description}
+              </span>
             )}
 
             {step.expectedOutcome && !isEditing && (
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontStyle: 'italic', wordBreak: 'break-word' }}>
                 ↳ {step.expectedOutcome}
               </span>
             )}
@@ -229,6 +225,7 @@ export const PlanReviewBox: React.FC<PlanReviewBoxProps> = ({
                   backgroundColor: 'transparent',
                   color: '#ef4444',
                   cursor: 'pointer',
+                  marginLeft: 'auto',
                 }}
                 title="Remove step"
               >
@@ -279,13 +276,13 @@ export const PlanReviewBox: React.FC<PlanReviewBoxProps> = ({
       )}
 
       {/* Confirmation CTA */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.75rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.75rem', flexWrap: 'wrap' }}>
         <button
           type="button"
           onClick={onDismiss}
           disabled={isRunning}
           className="btn-editorial-outline"
-          style={{ padding: '0.45rem 1rem', fontSize: '0.85rem' }}
+          style={{ padding: '0.5rem 1rem', fontSize: '0.85rem', minHeight: '38px', touchAction: 'manipulation' }}
         >
           Cancel
         </button>
@@ -295,7 +292,7 @@ export const PlanReviewBox: React.FC<PlanReviewBoxProps> = ({
           onClick={() => onExecutePlan(editedPlan)}
           disabled={!canExecute}
           className="btn-editorial-coral"
-          style={{ padding: '0.45rem 1.25rem', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem', minHeight: '38px', display: 'flex', alignItems: 'center', gap: '0.5rem', touchAction: 'manipulation' }}
           id="btn-confirm-and-run-plan"
         >
           <Play size={14} />

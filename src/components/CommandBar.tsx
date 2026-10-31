@@ -74,7 +74,7 @@ export const CommandBar: React.FC<CommandBarProps> = ({
           type="text"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
-          placeholder='Dictate with Wispr Flow (e.g. "Locate the No Hands challenge and verify Project Ideas section", "Verify page title", "Check console errors")'
+          placeholder='Dictate with Wispr Flow (e.g. "Verify page title", "Check console errors")'
           className="command-console-input"
           id="wispr-command-input"
           disabled={isRunning}
@@ -84,7 +84,16 @@ export const CommandBar: React.FC<CommandBarProps> = ({
           type="submit"
           disabled={isRunning || !parsed?.isValid}
           className="btn-editorial-pill"
-          style={{ padding: '0.4rem 0.9rem', fontSize: '0.8rem', whiteSpace: 'nowrap' }}
+          style={{
+            padding: '0.45rem 1rem',
+            fontSize: '0.85rem',
+            minHeight: '40px',
+            whiteSpace: 'nowrap',
+            flexShrink: 0,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.35rem',
+          }}
           id="btn-submit-wispr"
         >
           <span>Run</span>
@@ -142,7 +151,7 @@ export const CommandBar: React.FC<CommandBarProps> = ({
           type="button"
           onClick={onExportReport}
           className="btn-editorial-outline"
-          style={{ padding: '0.35rem 0.75rem', fontSize: '0.75rem' }}
+          style={{ padding: '0.4rem 0.85rem', fontSize: '0.78rem', minHeight: '36px', touchAction: 'manipulation' }}
           id="btn-export-report"
           title="Export JSON and readable markdown verification report"
         >

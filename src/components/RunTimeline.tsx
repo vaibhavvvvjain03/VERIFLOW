@@ -74,12 +74,12 @@ export const RunTimeline: React.FC<RunTimelineProps> = ({ steps, testName }) => 
                     {isRunning && <Clock size={16} color="var(--status-running)" className="spin" />}
                   </div>
 
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
-                      <span style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-ink)' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', flexWrap: 'wrap' }}>
+                      <span style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--text-ink)', wordBreak: 'break-word' }}>
                         {step.label}
                       </span>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)', flexShrink: 0 }}>
                         {step.durationMs}ms
                       </span>
                     </div>
@@ -95,16 +95,17 @@ export const RunTimeline: React.FC<RunTimelineProps> = ({ steps, testName }) => 
                           fontFamily: 'var(--font-mono)',
                           fontSize: '0.75rem',
                           color: '#991b1b',
+                          overflowX: 'auto',
                         }}
                       >
                         <div><strong>Assertion Mismatch:</strong></div>
-                        <div>Expected: <code>{JSON.stringify(step.assertionDiff.expected)}</code></div>
-                        <div>Actual: <code>{JSON.stringify(step.assertionDiff.actual)}</code></div>
+                        <div style={{ overflowWrap: 'anywhere', wordBreak: 'break-all' }}>Expected: <code>{JSON.stringify(step.assertionDiff.expected)}</code></div>
+                        <div style={{ overflowWrap: 'anywhere', wordBreak: 'break-all' }}>Actual: <code>{JSON.stringify(step.assertionDiff.actual)}</code></div>
                       </div>
                     )}
 
                     {step.error && (
-                      <div style={{ color: 'var(--status-fail)', fontSize: '0.775rem', marginTop: '0.35rem', fontFamily: 'var(--font-mono)' }}>
+                      <div style={{ color: 'var(--status-fail)', fontSize: '0.775rem', marginTop: '0.35rem', fontFamily: 'var(--font-mono)', overflowWrap: 'anywhere', wordBreak: 'break-word' }}>
                         {step.error}
                       </div>
                     )}

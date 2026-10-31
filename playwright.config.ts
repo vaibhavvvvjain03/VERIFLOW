@@ -26,6 +26,15 @@ export default defineConfig({
       ],
     },
   },
+  webServer: {
+    command: 'npx tsx server/index.ts',
+    port: 3000,
+    reuseExistingServer: true,
+    timeout: 15000,
+    env: {
+      PORT: '3000',
+    },
+  },
   projects: [
     {
       name: 'chromium',

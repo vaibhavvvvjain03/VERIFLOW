@@ -130,12 +130,7 @@ export const BrowserPreview: React.FC<BrowserPreviewProps> = ({ currentRun, isRu
                   e.currentTarget.src = fallback;
                 }
               }}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '440px',
-                objectFit: 'contain',
-                display: 'block',
-              }}
+              className="active-preview-img"
               id="active-preview-image"
             />
 
@@ -151,12 +146,13 @@ export const BrowserPreview: React.FC<BrowserPreviewProps> = ({ currentRun, isRu
                 color: '#ffffff',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
                 borderRadius: 'var(--radius-xs)',
-                padding: '0.35rem',
+                padding: '0.35rem 0.5rem',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.3rem',
                 fontSize: '0.7rem',
+                touchAction: 'manipulation',
               }}
               title="View full resolution frame"
             >
@@ -224,12 +220,13 @@ export const BrowserPreview: React.FC<BrowserPreviewProps> = ({ currentRun, isRu
           <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', flexShrink: 0 }}>
             Execution Timeline:
           </span>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <div className="preview-scrubber-track">
             {previewFrames.map((frame, idx) => (
               <button
                 key={frame.imageUrl + idx}
                 type="button"
                 onClick={() => setSelectedFrame(frame.imageUrl)}
+                className="preview-scrubber-btn"
                 style={{
                   border: (selectedFrame === frame.imageUrl || (!selectedFrame && idx === previewFrames.length - 1))
                     ? '2px solid var(--bg-lavender-deep)'
@@ -241,7 +238,6 @@ export const BrowserPreview: React.FC<BrowserPreviewProps> = ({ currentRun, isRu
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  flexShrink: 0,
                 }}
                 title={frame.stepLabel}
               >
@@ -270,46 +266,57 @@ export const BrowserPreview: React.FC<BrowserPreviewProps> = ({ currentRun, isRu
         <div
           style={{
             position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.85)',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.88)',
             zIndex: 9999,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '2rem',
+            padding: 'max(0.5rem, env(safe-area-inset-top, 0px)) max(0.5rem, env(safe-area-inset-right, 0px)) max(0.5rem, env(safe-area-inset-bottom, 0px)) max(0.5rem, env(safe-area-inset-left, 0px))',
           }}
           onClick={() => setIsModalOpen(false)}
         >
           <div
             style={{
               position: 'relative',
-              maxWidth: '92vw',
-              maxHeight: '92vh',
+              maxWidth: '96vw',
+              maxHeight: '94dvh',
               backgroundColor: '#0f172a',
               borderRadius: 'var(--radius-md)',
               overflow: 'hidden',
               boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)',
+              display: 'flex',
+              flexDirection: 'column',
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.75rem 1rem', borderBottom: '1px solid #334155', color: '#f8fafc' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.65rem 1rem', borderBottom: '1px solid #334155', color: '#f8fafc' }}>
               <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>Browser Viewport Inspection</span>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#94a3b8',
+                  cursor: 'pointer',
+                  padding: '0.4rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  touchAction: 'manipulation',
+                }}
+                aria-label="Close Full View"
               >
-                <X size={18} />
+                <X size={20} />
               </button>
             </div>
-            <img
-              src={activeFrame}
-              alt="High resolution frame"
-              style={{ maxWidth: '100%', maxHeight: '80vh', objectFit: 'contain', display: 'block' }}
-            />
+            <div style={{ overflow: 'auto', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0.5rem' }}>
+              <img
+                src={activeFrame}
+                alt="High resolution frame"
+                style={{ maxWidth: '100%', maxHeight: 'calc(85dvh - 50px)', objectFit: 'contain', display: 'block' }}
+              />
+            </div>
           </div>
         </div>
       )}
